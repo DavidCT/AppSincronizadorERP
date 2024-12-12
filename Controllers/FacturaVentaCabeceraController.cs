@@ -18,26 +18,13 @@ namespace AppSincronizadorERP.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<FacturaVentaCabecera>>> GetFacturasVenta()
+        public async Task<ActionResult<IEnumerable<FacturaVentaCabecera>>> ObtenerFacturasVenta()
         {
             return await _context.FacturaVentaCabecera.ToListAsync();
         }
 
-        [HttpGet("ByDate")]
-        public async Task<ActionResult<IEnumerable<FacturaVentaCabecera>>> GetFacturasByDate()
-        {
-            var fechaLimite = new DateTime(2024, 1, 1);
-
-            var facturas = await _context.FacturaVentaCabecera
-                .Where(f => f.FechaFactura >= fechaLimite)
-                .OrderByDescending(f => f.NFactura)
-                .ToListAsync();
-
-            return facturas;
-        }
-
-        [HttpPost("ByDate")]
-        public async Task<ActionResult<IEnumerable<FacturaVentaCabecera>>> GetFacturasByDate([FromBody] FechaRequest request)
+        [HttpPost("PorFecha")]
+        public async Task<ActionResult<IEnumerable<FacturaVentaCabecera>>> ObtenerFacturasVentaPorCliente([FromBody] FechaRequest request)
         {
             var facturas = await _context.FacturaVentaCabecera
                 .Where(f => f.FechaFactura >= request.Fecha)
