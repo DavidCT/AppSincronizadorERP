@@ -1,0 +1,6 @@
+@AppSincronizadorERP_HostAddress = http://localhost:5115
+
+GET {{AppSincronizadorERP_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
