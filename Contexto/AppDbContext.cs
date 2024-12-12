@@ -11,5 +11,6 @@ namespace AppSincronizadorERP.Contexto
 
         public DbSet<Clientes> Clientes { get; set; }
         public DbSet<FacturaVentaCabecera> FacturaVentaCabecera { get; set; }
+        public DbSet<FacturaVentaLineas> FacturaVentaLineas { get; set; }
     }
 }
