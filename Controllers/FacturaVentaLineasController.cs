@@ -19,21 +19,40 @@ namespace AppSincronizadorERP.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<FacturaVentaLineas>>> GetFacturasVentaLinea()
         {
-            var facturas = await _context.FacturaVentaLineas.ToListAsync();
-            return Ok(facturas);
+            try
+            {
+                var facturas = await _context.FacturaVentaLineas.ToListAsync();
+                return Ok(facturas);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error interno del servidor.");
+            }
         }
 
-        [HttpGet("PorFechaCreacion")]
-        public async Task<ActionResult<IEnumerable<FacturaVentaLineas>>> GetFacturasByDate()
+        [HttpGet("PorFechaCreacion/{fechaLimite}")] // Pasar la fecha como parámetro
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)] // Documentar posible Bad Request
+        public async Task<ActionResult<IEnumerable<FacturaVentaLineas>>> GetFacturasByDate(DateTime fechaLimite)
         {
-            var fechaLimite = new DateTime(2024, 1, 1);
+            if (fechaLimite == DateTime.MinValue) // Validar la fecha
+            {
+                return BadRequest("La fecha límite no es válida.");
+            }
 
-            var facturas = await _context.FacturaVentaLineas
-                .Where(f => f.FechaCreacionAudi >= fechaLimite)
-                .OrderByDescending(f => f.IDArticulo)
-                .ToListAsync();
+            try
+            {
+                var facturas = await _context.FacturaVentaLineas
+                    .Where(f => f.FechaCreacionAudi >= fechaLimite)
+                    .OrderByDescending(f => f.IDArticulo)
+                    .ToListAsync();
 
-            return facturas;
+                return Ok(facturas);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error interno del servidor.");
+            }
         }
     }
 }
