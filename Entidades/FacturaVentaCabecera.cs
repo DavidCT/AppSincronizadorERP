@@ -7,7 +7,10 @@ namespace AppSincronizadorERP.Entidades
     public class FacturaVentaCabecera
     {
         [Key] public required int IDFactura { get; set; }
+
+        [MaxLength(25)]
         public required string NFactura { get; set; }
+
         public required DateTime FechaFactura { get; set; }
         public required string IDCliente { get; set; }
         public string? RazonSocial { get; set; }
