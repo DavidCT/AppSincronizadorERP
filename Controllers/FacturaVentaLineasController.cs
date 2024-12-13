@@ -19,7 +19,8 @@ namespace AppSincronizadorERP.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<FacturaVentaLineas>>> GetFacturasVentaLinea()
         {
-            return await _context.FacturaVentaLineas.ToListAsync();
+            var facturas = await _context.FacturaVentaLineas.ToListAsync();
+            return Ok(facturas);
         }
 
         [HttpGet("PorFechaCreacion")]
