@@ -6,7 +6,11 @@ namespace AppSincronizadorERP.Entidades
     [Table("tbMaestroCliente")]
     public class Clientes
     {
-        [Key] public required string IDCliente { get; set; }
+        [Key]
+        [Required(ErrorMessage = "El ID del cliente es obligatorio.")]
+        [MaxLength(50, ErrorMessage = "El ID del cliente no puede tener más de 50 caracteres.")] 
+        public required string IDCliente { get; set; }
+
         public required string DescCliente { get; set; }
         public string? RazonSocial { get; set; }
         public string? Direccion { get; set; }
