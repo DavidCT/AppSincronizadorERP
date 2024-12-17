@@ -1,6 +1,7 @@
 using AppSincronizadorERP.Contexto;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,7 +27,23 @@ void ConfigureServices(IServiceCollection services, IConfiguration configuration
     // Add services to the container.
     services.AddControllers();
     services.AddEndpointsApiExplorer();
-    services.AddSwaggerGen();
+
+    services.AddSwaggerGen(options =>
+    {
+        options.SwaggerDoc("v1", new OpenApiInfo
+        {
+            Title = "API Sincronizador ERP",
+            Version = "v1",
+            Description = "Documentación de mi API con ejemplos claros.",
+            Contact = new OpenApiContact
+            {
+                Name = "David Cuervo Tuñón",
+                Email = "david@ngi.es",
+                Url = new Uri("https://tuwebsite.com")
+            }
+        });
+    });
+
     services.AddDbContext<AppDbContext>(options =>
         options.UseSqlServer(configuration.GetConnectionString("CadenaConexion")));
 
