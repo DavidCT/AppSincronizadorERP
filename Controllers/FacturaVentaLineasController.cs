@@ -30,9 +30,9 @@ namespace AppSincronizadorERP.Controllers
             }
         }
 
-        [HttpGet("PorFechaCreacion/{fechaLimite}")] // Pasar la fecha como parámetro
+        [HttpGet("PorFechaCreacion/{fechaLimite}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)] // Documentar posible Bad Request
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<IEnumerable<FacturaVentaLineas>>> GetFacturasByDate(DateTime fechaLimite)
         {
             if (fechaLimite == DateTime.MinValue) // Validar la fecha

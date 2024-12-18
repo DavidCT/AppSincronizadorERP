@@ -5,19 +5,14 @@ using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Configuración de servicios
 ConfigureServices(builder.Services, builder.Configuration);
 
 var app = builder.Build();
 
-// Configuración del pipeline de solicitudes HTTP
 Configure(app, app.Environment);
 
 app.Run();
@@ -66,6 +61,19 @@ void Configure(WebApplication app, IWebHostEnvironment env)
     {
         app.UseSwagger();
         app.UseSwaggerUI();
+
+        app.UseReDoc(options =>
+        {
+            options.RoutePrefix = "documentacion";
+            options.SpecUrl = "/swagger/v1/swagger.json";
+            options.DocumentTitle = "API ReDoc Documentation";
+            options.ExpandResponses("200,201");
+            options.HideDownloadButton();
+            options.HideHostname();
+            options.RequiredPropsFirst();
+            options.NoAutoAuth();
+        });
+
     }
     app.UseHttpsRedirection();
     app.UseCors("AllowAll");
