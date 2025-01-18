@@ -2,6 +2,7 @@ using AppSincronizadorERP.Contexto;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.OpenApi.Models;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -52,6 +53,13 @@ void ConfigureServices(IServiceCollection services, IConfiguration configuration
                        .AllowAnyHeader();
             });
     });
+
+     Log.Logger = new LoggerConfiguration()
+        .WriteTo.Console() 
+        .WriteTo.File("logs/log.txt", rollingInterval: RollingInterval.Day)
+        .CreateLogger();
+
+    builder.Host.UseSerilog();
 }
 
 void Configure(WebApplication app, IWebHostEnvironment env)
