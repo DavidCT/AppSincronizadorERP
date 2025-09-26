@@ -14,5 +14,6 @@ namespace AppSincronizadorERP.Entidades
         public required string DescCliente { get; set; }
         public string? RazonSocial { get; set; }
         public string? Direccion { get; set; }
+        public string? Poblacion { get; set; }
     }
 }
